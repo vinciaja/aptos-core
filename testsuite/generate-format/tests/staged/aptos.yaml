@@ -1,0 +1,289 @@
+---
+AccessPath:
+  STRUCT:
+    - address:
+        TYPENAME: AccountAddress
+    - path: BYTES
+AccountAddress:
+  NEWTYPESTRUCT:
+    TUPLEARRAY:
+      CONTENT: U8
+      SIZE: 32
+AccountAuthenticator:
+  ENUM:
+    0:
+      Ed25519:
+        STRUCT:
+          - public_key:
+              TYPENAME: Ed25519PublicKey
+          - signature:
+              TYPENAME: Ed25519Signature
+    1:
+      MultiEd25519:
+        STRUCT:
+          - public_key:
+              TYPENAME: MultiEd25519PublicKey
+          - signature:
+              TYPENAME: MultiEd25519Signature
+BlockMetadata:
+  STRUCT:
+    - id:
+        TYPENAME: HashValue
+    - epoch: U64
+    - round: U64
+    - previous_block_votes:
+        SEQ: BOOL
+    - proposer:
+        TYPENAME: AccountAddress
+    - timestamp_usecs: U64
+ChainId:
+  NEWTYPESTRUCT: U8
+ChangeSet:
+  STRUCT:
+    - write_set:
+        TYPENAME: WriteSet
+    - events:
+        SEQ:
+          TYPENAME: ContractEvent
+ContractEvent:
+  ENUM:
+    0:
+      V0:
+        NEWTYPE:
+          TYPENAME: ContractEventV0
+ContractEventV0:
+  STRUCT:
+    - key:
+        TYPENAME: EventKey
+    - sequence_number: U64
+    - type_tag:
+        TYPENAME: TypeTag
+    - event_data: BYTES
+Ed25519PublicKey:
+  NEWTYPESTRUCT: BYTES
+Ed25519Signature:
+  NEWTYPESTRUCT: BYTES
+EventKey:
+  NEWTYPESTRUCT: BYTES
+HashValue:
+  NEWTYPESTRUCT: BYTES
+Identifier:
+  NEWTYPESTRUCT: STR
+Module:
+  STRUCT:
+    - code: BYTES
+ModuleBundle:
+  STRUCT:
+    - codes:
+        SEQ:
+          TYPENAME: Module
+ModuleId:
+  STRUCT:
+    - address:
+        TYPENAME: AccountAddress
+    - name:
+        TYPENAME: Identifier
+MultiEd25519PublicKey:
+  NEWTYPESTRUCT: BYTES
+MultiEd25519Signature:
+  NEWTYPESTRUCT: BYTES
+RawTransaction:
+  STRUCT:
+    - sender:
+        TYPENAME: AccountAddress
+    - sequence_number: U64
+    - payload:
+        TYPENAME: TransactionPayload
+    - max_gas_amount: U64
+    - gas_unit_price: U64
+    - expiration_timestamp_secs: U64
+    - chain_id:
+        TYPENAME: ChainId
+Script:
+  STRUCT:
+    - code: BYTES
+    - ty_args:
+        SEQ:
+          TYPENAME: TypeTag
+    - args:
+        SEQ:
+          TYPENAME: TransactionArgument
+ScriptFunction:
+  STRUCT:
+    - module:
+        TYPENAME: ModuleId
+    - function:
+        TYPENAME: Identifier
+    - ty_args:
+        SEQ:
+          TYPENAME: TypeTag
+    - args:
+        SEQ: BYTES
+SignedTransaction:
+  STRUCT:
+    - raw_txn:
+        TYPENAME: RawTransaction
+    - authenticator:
+        TYPENAME: TransactionAuthenticator
+StateKey:
+  ENUM:
+    0:
+      AccessPath:
+        NEWTYPE:
+          TYPENAME: AccessPath
+    1:
+      TableItem:
+        STRUCT:
+          - handle: U128
+          - key: BYTES
+    2:
+      Raw:
+        NEWTYPE: BYTES
+StructTag:
+  STRUCT:
+    - address:
+        TYPENAME: AccountAddress
+    - module:
+        TYPENAME: Identifier
+    - name:
+        TYPENAME: Identifier
+    - type_args:
+        SEQ:
+          TYPENAME: TypeTag
+Transaction:
+  ENUM:
+    0:
+      UserTransaction:
+        NEWTYPE:
+          TYPENAME: SignedTransaction
+    1:
+      GenesisTransaction:
+        NEWTYPE:
+          TYPENAME: WriteSetPayload
+    2:
+      BlockMetadata:
+        NEWTYPE:
+          TYPENAME: BlockMetadata
+    3:
+      StateCheckpoint: UNIT
+TransactionArgument:
+  ENUM:
+    0:
+      U8:
+        NEWTYPE: U8
+    1:
+      U64:
+        NEWTYPE: U64
+    2:
+      U128:
+        NEWTYPE: U128
+    3:
+      Address:
+        NEWTYPE:
+          TYPENAME: AccountAddress
+    4:
+      U8Vector:
+        NEWTYPE: BYTES
+    5:
+      Bool:
+        NEWTYPE: BOOL
+TransactionAuthenticator:
+  ENUM:
+    0:
+      Ed25519:
+        STRUCT:
+          - public_key:
+              TYPENAME: Ed25519PublicKey
+          - signature:
+              TYPENAME: Ed25519Signature
+    1:
+      MultiEd25519:
+        STRUCT:
+          - public_key:
+              TYPENAME: MultiEd25519PublicKey
+          - signature:
+              TYPENAME: MultiEd25519Signature
+    2:
+      MultiAgent:
+        STRUCT:
+          - sender:
+              TYPENAME: AccountAuthenticator
+          - secondary_signer_addresses:
+              SEQ:
+                TYPENAME: AccountAddress
+          - secondary_signers:
+              SEQ:
+                TYPENAME: AccountAuthenticator
+TransactionPayload:
+  ENUM:
+    0:
+      WriteSet:
+        NEWTYPE:
+          TYPENAME: WriteSetPayload
+    1:
+      Script:
+        NEWTYPE:
+          TYPENAME: Script
+    2:
+      ModuleBundle:
+        NEWTYPE:
+          TYPENAME: ModuleBundle
+    3:
+      ScriptFunction:
+        NEWTYPE:
+          TYPENAME: ScriptFunction
+TypeTag:
+  ENUM:
+    0:
+      bool: UNIT
+    1:
+      u8: UNIT
+    2:
+      u64: UNIT
+    3:
+      u128: UNIT
+    4:
+      address: UNIT
+    5:
+      signer: UNIT
+    6:
+      vector:
+        NEWTYPE:
+          TYPENAME: TypeTag
+    7:
+      struct:
+        NEWTYPE:
+          TYPENAME: StructTag
+VecBytes:
+  NEWTYPESTRUCT:
+    SEQ: BYTES
+WriteOp:
+  ENUM:
+    0:
+      Deletion: UNIT
+    1:
+      Value:
+        NEWTYPE: BYTES
+WriteSet:
+  NEWTYPESTRUCT:
+    TYPENAME: WriteSetMut
+WriteSetMut:
+  STRUCT:
+    - write_set:
+        SEQ:
+          TUPLE:
+            - TYPENAME: StateKey
+            - TYPENAME: WriteOp
+WriteSetPayload:
+  ENUM:
+    0:
+      Direct:
+        NEWTYPE:
+          TYPENAME: ChangeSet
+    1:
+      Script:
+        STRUCT:
+          - execute_as:
+              TYPENAME: AccountAddress
+          - script:
+              TYPENAME: Script

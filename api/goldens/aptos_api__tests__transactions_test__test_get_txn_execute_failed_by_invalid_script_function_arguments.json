@@ -1,0 +1,60 @@
+{
+  "type": "user_transaction",
+  "version": "2",
+  "hash": "",
+  "state_root_hash": "",
+  "event_root_hash": "",
+  "gas_used": "1",
+  "success": false,
+  "vm_status": "Transaction Executed and Committed with Error FAILED_TO_DESERIALIZE_ARGUMENT",
+  "accumulator_root_hash": "",
+  "changes": [
+    {
+      "type": "write_resource",
+      "address": "0xa550c18",
+      "state_key_hash": "",
+      "data": {
+        "type": "0x1::Account::Account",
+        "data": {
+          "authentication_key": "0x7deeccb1080854f499ec8b4c1b213b82c5e34b925cf6875fec02d4b77adbd2d6",
+          "self_address": "0xa550c18",
+          "sequence_number": "1"
+        }
+      }
+    },
+    {
+      "type": "write_resource",
+      "address": "0xa550c18",
+      "state_key_hash": "",
+      "data": {
+        "type": "0x1::TestCoin::Balance",
+        "data": {
+          "coin": {
+            "value": "18446744073709551614"
+          }
+        }
+      }
+    }
+  ],
+  "sender": "0xa550c18",
+  "sequence_number": "0",
+  "max_gas_amount": "2000",
+  "gas_unit_price": "0",
+  "expiration_timestamp_secs": "18446744073709551615",
+  "payload": {
+    "type": "script_function_payload",
+    "function": "0x1::TestCoin::transfer",
+    "type_arguments": [],
+    "arguments": [
+      "0x00000000000000000000000000000000000000000000000000000000000000dd",
+      "0x01"
+    ]
+  },
+  "signature": {
+    "type": "ed25519_signature",
+    "public_key": "0xb9c6ee1630ef3e711144a648db06bbb2284f7274cfbee53ffcee503cc1a49200",
+    "signature": "0x50c1b8be07136d88a6ccb5717d9dcef5487b1b0198f4e20c0b808146cf42fe38071534cdb789e5b83be1792a3d22e9bbae3643413050a1bdacabd4509d8b0205"
+  },
+  "events": [],
+  "timestamp": "1"
+}

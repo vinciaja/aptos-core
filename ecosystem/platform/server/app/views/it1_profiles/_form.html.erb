@@ -1,0 +1,109 @@
+<div class="flex flex-col lg:flex-row justify-between">
+  <%= render "shared/captcha_helper" %>
+
+  <%= form_with(model: it1_profile, class: "contents", data: {turbo: false}, html: {onsubmit:"return validateRecaptcha();"}, builder: AptosFormBuilder) do |f| %>
+    <div>
+      <% if it1_profile.errors.any? %>
+        <div id="error_explanation" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200 lg:w-96" role="alert">
+          <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+            <h2><%= pluralize(it1_profile.errors.count, "error") %> prohibited this from being saved:</h2>
+
+            <ul>
+              <% it1_profile.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <div>
+        <div class="mb-16">
+          <h3 class="text-teal-400 font-mono uppercase text-2xl mb-2">Public Keys</h3>
+          <div class="mb-8"><%= render 'shared/bump' %></div>
+
+          <div class="mb-4">
+          <%= f.label :consensus_key, class: "font-mono uppercase block mb-2 text-lg" %>
+          <%= f.text_field :consensus_key, autofocus: true, required: true, pattern: '0x[a-f0-9]{64}' %>
+          </div>
+          <div class="mb-4">
+          <%= f.label :account_key, class: "font-mono uppercase block mb-2 text-lg" %>
+          <%= f.text_field :account_key, required: true, pattern: '0x[a-f0-9]{64}' %>
+          </div>
+          <div class="mb-4">
+          <%= f.label :network_key, "Validator Network Key", class: "font-mono uppercase block mb-2 text-lg" %>
+          <%= f.text_field :network_key, required: true, pattern: '0x[a-f0-9]{64}' %>
+          </div>
+        </div>
+
+        <div class="mb-16">
+          <h3 class="text-teal-400 font-mono uppercase text-2xl mb-2">Validator Node</h3>
+          <div class="mb-8"><%= render 'shared/bump' %></div>
+
+          <div class="mb-4">
+          <%= f.label :validator_address, "Address (IP or hostname)", class: "font-mono uppercase block mb-2 text-lg" %>
+          <%= f.text_field :validator_address, required: true %>
+          </div>
+
+          <div class="flex gap-8 md:gap-16 mb-4 items-end">
+            <div class="flex-1">
+              <%= f.label :validator_port, "Validator (noise) port", class: "font-mono uppercase block mb-2 text-lg" %>
+              <%= f.text_field :validator_port, required: true, pattern: '[0-9]+' %>
+            </div>
+            <div class="flex-1">
+              <%= f.label :validator_metrics_port, "Metrics port", class: "font-mono uppercase block mb-2 text-lg" %>
+              <%= f.text_field :validator_metrics_port, required: true, pattern: '[0-9]+' %>
+            </div>
+          </div>
+
+          <div class="flex gap-8 md:gap-16 mb-4 items-end">
+            <div class="flex-1">
+              <%= f.label :validator_api_port, "API port", class: "font-mono uppercase block mb-2 text-lg" %>
+              <%= f.text_field :validator_api_port, required: true, pattern: '[0-9]+' %>
+            </div>
+            <div class="flex-1"></div>
+          </div>
+
+        </div>
+
+        <div class="mb-16">
+          <h3 class="text-teal-400 font-mono uppercase text-2xl mb-2">
+            Full Node <span class="text-teal-400 opacity-50 font-mono lowercase text-sm mb-2">[optional]</span>
+          </h3>
+          <div class="mb-8"><%= render 'shared/bump' %></div>
+
+          <div class="mb-4">
+          <%= f.label :fullnode_address, "Address (IP or hostname)", class: "font-mono uppercase block mb-2 text-lg" %>
+          <%= f.text_field :fullnode_address %>
+          </div>
+
+          <div class="mb-4">
+          <%= f.label :fullnode_network_key, class: "font-mono uppercase block mb-2 text-lg" %>
+          <%= f.text_field :fullnode_network_key, pattern: '0x[a-f0-9]{64}' %>
+          </div>
+
+          <div class="flex gap-8 md:gap-16 mb-4 items-end">
+            <div class="flex-1">
+              <%= f.label :fullnode_port, class: "font-mono uppercase block mb-2 text-lg" %>
+              <%= f.text_field :fullnode_port, pattern: '[0-9]+' %>
+            </div>
+            <div class="flex-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-neutral-800 rounded-md p-4 md:px-8 md:py-16 2xl:px-16 2xl:py-24 self-start">
+      <%= f.submit "Validate node", class: "w-full mb-8" %>
+      <div class="mb-8">
+      <%= recaptcha_tags theme: :dark %>
+      </div>
+      <div class="text-sm">
+        <label class="flex mb-4 gap-2 items-center cursor-pointer">
+          <%= f.check_box :terms_accepted, required: true %>
+          <span>I agree to the Aptos <a href="https://aptoslabs.com/terms-testnet/" class="font-bold text-teal-400">Testnet Participation Terms of Use</a>.</span>
+        </label>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,60 @@
+{
+  "type": "user_transaction",
+  "version": "4",
+  "hash": "",
+  "state_root_hash": "",
+  "event_root_hash": "",
+  "gas_used": "21",
+  "success": false,
+  "vm_status": "Move abort by LIMIT_EXCEEDED - EINSUFFICIENT_BALANCE\n A limit on an amount, e.g. a currency, is exceeded. Example: withdrawal of money after account limits window\n is exhausted.\n Error codes",
+  "accumulator_root_hash": "",
+  "changes": [
+    {
+      "type": "write_resource",
+      "address": "0xe60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
+      "state_key_hash": "",
+      "data": {
+        "type": "0x1::Account::Account",
+        "data": {
+          "authentication_key": "0x0e60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
+          "self_address": "0xe60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
+          "sequence_number": "1"
+        }
+      }
+    },
+    {
+      "type": "write_resource",
+      "address": "0xe60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
+      "state_key_hash": "",
+      "data": {
+        "type": "0x1::TestCoin::Balance",
+        "data": {
+          "coin": {
+            "value": "0"
+          }
+        }
+      }
+    }
+  ],
+  "sender": "0xe60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
+  "sequence_number": "0",
+  "max_gas_amount": "2000",
+  "gas_unit_price": "0",
+  "expiration_timestamp_secs": "18446744073709551615",
+  "payload": {
+    "type": "script_function_payload",
+    "function": "0x1::TestCoin::transfer",
+    "type_arguments": [],
+    "arguments": [
+      "0xdd",
+      "123"
+    ]
+  },
+  "signature": {
+    "type": "ed25519_signature",
+    "public_key": "0xafb4905e9550cf462a82007824a055d975ae934470c477d9ddbb6d2b264c36fa",
+    "signature": "0x378c0f879daa66f62eba8ec8a493fc6f1c7ee8ec832b9f783095f1f2e156e758e66130dfd4cde331dc80f60a680ee9c821f9e7539779352e50adddad3ce84302"
+  },
+  "events": [],
+  "timestamp": "1"
+}

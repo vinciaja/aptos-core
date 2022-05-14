@@ -1,0 +1,25 @@
+AllCops:
+  NewCops: enable
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 12
+
+Metrics/PerceivedComplexity:
+  Max: 12
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 100
+
+Style/Copyright:
+  Enabled: true
+  Notice: '^# Copyright \(c\) Aptos'
+  AutocorrectNotice: "# Copyright (c) Aptos\n# SPDX-License-Identifier: Apache-2.0"

@@ -1,0 +1,17 @@
+<script type="application/javascript">
+    function validateRecaptcha() {
+        const response = grecaptcha.getResponse();
+        if (response.length === 0) {
+            const element = document.getElementsByClassName("g-recaptcha")[0];
+            if (element) {
+                element.classList.add("shake");
+                setTimeout(() => {
+                    element.classList.remove("shake");
+                }, 300);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
